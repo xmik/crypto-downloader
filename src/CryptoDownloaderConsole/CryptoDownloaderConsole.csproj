@@ -5,4 +5,9 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.4.3" />
+    <PackageReference Include="DigitalRuby.ExchangeSharp" Version="0.5.9" />
+  </ItemGroup>
+
 </Project>

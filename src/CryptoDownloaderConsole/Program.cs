@@ -1,4 +1,5 @@
 ﻿using System;
+using ExchangeSharp;
 
 namespace CryptoDownloaderConsole
 {
@@ -6,7 +7,15 @@ namespace CryptoDownloaderConsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            ExchangeKrakenAPI api = new ExchangeKrakenAPI();
+            ExchangeTicker ticker = api.GetTickerAsync("XXBTZUSD").Sync();
+            Console.WriteLine("On the Kraken exchange, 1 bitcoin is worth {0} USD.", ticker.Bid);
+            var symbols = api.GetMarketSymbolsAsync().Sync();
+            Console.WriteLine("symbols:");
+            foreach (string symbol in symbols)
+            {
+                Console.WriteLine(symbol);
+            }
         }
     }
 }

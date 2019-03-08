@@ -1,7 +1,7 @@
 # README for developers
 
 ## Development
-Compile all C# projects:
+Compile all C# projects (this will also install all the dependencies):
 ```
 ./tasks build
 # OR:
@@ -47,4 +47,11 @@ work$ dotnet sln ./CryptoDownloader.sln add tests/CryptoDownloaderConsole.Tests/
 
 # Reference the console C# project from the tests C# project
 work$ dotnet add tests/CryptoDownloaderConsole.Tests/CryptoDownloaderConsole.Tests.csproj reference src/CryptoDownloaderConsole/CryptoDownloaderConsole.csproj
+```
+
+## How external dependencies were added
+Add external packages references to the console C# project file
+```
+work$ dotnet add src/CryptoDownloaderConsole/ package --version=0.5.9 DigitalRuby.ExchangeSharp
+work$ dotnet add src/CryptoDownloaderConsole/ package --version=2.4.3 CommandLineParser
 ```
