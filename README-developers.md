@@ -15,11 +15,17 @@ Run C# tests:
 dotnet test
 ```
 
-Run the Console project:
+Run integration tests with [Bats](https://github.com/sstephenson/bats):
 ```
-./tasks run
-# OR:
-dotnet run --project=./src/CryptoDownloaderConsole/
+./tasks itest
+```
+
+### Install Bats on Linux
+```
+git clone --depth 1 https://github.com/sstephenson/bats.git /opt/bats
+git clone --depth 1 https://github.com/ztombol/bats-support.git /opt/bats-support
+git clone --depth 1 https://github.com/ztombol/bats-assert.git /opt/bats-assert
+/opt/bats/install.sh /usr/local
 ```
 
 ## How the C# solution was set up

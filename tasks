@@ -3,11 +3,15 @@
 command="$1"
 case "${command}" in
   build)
-      dotnet build
+      dotnet build --configuration=Release
       exit $?
       ;;
   test)
       dotnet test
+      exit $?
+      ;;
+  itest)
+      bats tests/integration/bats
       exit $?
       ;;
   run)
