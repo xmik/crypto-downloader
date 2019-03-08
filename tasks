@@ -1,0 +1,22 @@
+#!/bin/bash
+
+command="$1"
+case "${command}" in
+  build)
+      dotnet build
+      exit $?
+      ;;
+  test)
+      dotnet test
+      exit $?
+      ;;
+  run)
+      dotnet run --project=./src/CryptoDownloaderConsole/
+      exit $?
+      ;;
+  *)
+      echo "Invalid command: '${command}'"
+      exit 1
+      ;;
+esac
+set +e
