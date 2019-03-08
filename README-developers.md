@@ -50,8 +50,14 @@ work$ dotnet add tests/CryptoDownloaderConsole.Tests/CryptoDownloaderConsole.Tes
 ```
 
 ## How external dependencies were added
-Add external packages references to the console C# project file
+Add external packages references to the C# projects files
 ```
 work$ dotnet add src/CryptoDownloaderConsole/ package --version=0.5.9 DigitalRuby.ExchangeSharp
 work$ dotnet add src/CryptoDownloaderConsole/ package --version=2.4.3 CommandLineParser
+work$ dotnet add src/CryptoDownloaderConsole/ package --version=2.4.4 NodaTime
+work$ dotnet add tests/CryptoDownloaderConsole.Tests/ package --version=2.4.4 NodaTime
+work$ dotnet add src/CryptoDownloaderConsole/ package --version=2.0.8 log4net
+work$ dotnet add src/CryptoDownloaderConsole/ package --version=4.9.1 Autofac
+work$ dotnet add tests/CryptoDownloaderConsole.Tests/ package --version=4.9.1 Autofac
+work$ dotnet add tests/CryptoDownloaderConsole.Tests/ package --version=4.10.1 Moq
 ```
