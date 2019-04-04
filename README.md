@@ -3,6 +3,11 @@
 A console application (CLI) to download crypto currency data from Poloniex.
 
 ## Usage
+You may need to generate the nuget config, run:
+```
+./tasks generate_nuget_config
+```
+
 First, compile the code:
 ```
 ./tasks build
