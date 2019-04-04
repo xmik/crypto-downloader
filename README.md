@@ -25,3 +25,19 @@ dotnet "${executable}" list
 
 ## Dependencies
 dotnet-sdk-2.1, [here](https://dotnet.microsoft.com/learn/dotnet/hello-world-tutorial/install) are instructions how to install.
+
+## Development
+Run unit tests:
+```
+./tasks utest
+```
+
+Run integration tests:
+```
+./tasks itest
+```
+
+Run acceptance tests:
+```
+./tasks atest
+```

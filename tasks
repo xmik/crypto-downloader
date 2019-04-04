@@ -18,12 +18,19 @@ EOF
       dotnet build --configuration=Release
       exit $?
       ;;
-  test)
-      dotnet test
+  utest)
+      # run unit tests
+      dotnet test --filter Category!=integration
       exit $?
       ;;
   itest)
-      bats tests/integration/bats
+      # run integration tests
+      dotnet test --filter Category=integration
+      exit $?
+      ;;
+  atest)
+      # run acceptance tests
+      bats tests/acceptance/bats
       exit $?
       ;;
   run)
