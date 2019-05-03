@@ -30,11 +30,15 @@ namespace CryptoDownloader.Tests
 
             using (var container = b.Build())
             {
+                var batchNumberService = container.Resolve<IBatchNumberService>();
+                int batchNumber = batchNumberService.GetBatchNumberToBeDownloaded(
+                    DateTime.Now.ToUniversalTime().ToNodaTime());
+
                 var historicalService = container.Resolve<IHistoricalPricesDownloadService>();
                 var instruments = new string[]{"USDC_BTC"};
-                historicalService.DownloadAndSave(instruments, 1, seriesDir, cts.Token);
+                historicalService.DownloadAndSave(instruments, batchNumber, seriesDir, cts.Token);
 
-                string filePath = seriesDir + "/1/USDC_BTC.csv";
+                string filePath = string.Format("{0}/{1}/USDC_BTC.csv", seriesDir, batchNumber);
                 Assert.True (File.Exists (filePath));
                 var fileContents = File.ReadAllText(filePath);
                 // assert that there are 2016 candle events written to file (file has 2017 lines, 1 is a header)
