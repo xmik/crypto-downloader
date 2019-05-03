@@ -35,10 +35,10 @@ namespace CryptoDownloader.Tests
                 historicalService.DownloadAndSave(instruments, 1, seriesDir, cts.Token);
 
                 string filePath = seriesDir + "/1/USDC_BTC.csv";
-                Assert.False (File.Exists (filePath));
+                Assert.True (File.Exists (filePath));
                 var fileContents = File.ReadAllText(filePath);
-                // assert that there are 2016 candle events written to file (file has 2016 lines)
-                Assert.Equal(2016, fileContents.Split('\n').Length);
+                // assert that there are 2016 candle events written to file (file has 2017 lines, 1 is a header)
+                Assert.Equal(2017, fileContents.Split('\n').Length);
                 // do not check the file contents, because after some time
                 // the data will be not available on Poloniex and this test would fail
             }

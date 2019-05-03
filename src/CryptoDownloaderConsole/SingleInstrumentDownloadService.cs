@@ -35,7 +35,7 @@ namespace CryptoDownloader
                 instrument, timeframeSeconds, safeBatchDateRange.Start, safeBatchDateRange.End);
             _log.InfoFormat("{0} downloaded {1} events", instrument, candleEvents.Length);
 
-            seriesAppendingService.Write(candleEvents, instrument, cancelToken, batchDateRange);
+            seriesAppendingService.Write(candleEvents, instrumentFilePath, cancelToken, batchDateRange);
         }
     }
 }

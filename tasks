@@ -20,12 +20,12 @@ EOF
       ;;
   utest)
       # run unit tests
-      dotnet test --filter Category!=integration
+      dotnet test --configuration=Release --filter Category!=integration ./tests/CryptoDownloaderConsole.Tests/
       exit $?
       ;;
   itest)
       # run integration tests
-      dotnet test --filter Category=integration
+      dotnet test --configuration=Release --filter Category=integration ./tests/CryptoDownloaderConsole.Tests/
       exit $?
       ;;
   atest)
