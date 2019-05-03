@@ -50,9 +50,9 @@ executable="./src/CryptoDownloaderConsole/bin/Release/netcoreapp2.1/CryptoDownlo
 @test "get with valid parameters (1st batch of all instruments with dryrun)" {
   instruments=$(dotnet ${executable} list)
   run dotnet "${executable}" get --instruments=${instruments} --batch=1 --directory=./tests/integration/testdata --dryrun=true
-  assert_output --partial "Downloading instrument 1/125"
-  assert_output --partial "Downloading instrument 10/125"
-  assert_output --partial "Downloading instrument 125/125"
+  assert_output --partial "Downloading instrument 1/"
+  assert_output --partial "Downloading instrument 10/"
+  assert_output --partial "Downloading instrument 125/"
   assert_output --partial "Finished download with success"
   refute_output --partial "Exception"
   refute_output --partial "Error"
