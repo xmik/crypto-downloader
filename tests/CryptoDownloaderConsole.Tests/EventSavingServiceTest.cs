@@ -90,7 +90,7 @@ namespace CryptoDownloader.Tests
                 new CandleEvent(new Candle(33f, 34f, 12f, 15f), 1L),
             };
             string filePath = Path.Combine(Environment.CurrentDirectory, "newdir", "test1.csv");
-            Cleanup(filePath);
+            if(Directory.Exists(filePath)) Cleanup(filePath);
 
             var seriesWriter = new EventSavingService();
             IRange<NodaTime.Instant> longRange = createLongRange();
