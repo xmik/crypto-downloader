@@ -47,6 +47,8 @@ namespace CryptoDownloader
                 lastTimestamp = NodaTime.Instant.FromUnixTimeTicks(0);
             }
 
+            string newLine = Environment.NewLine;
+
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(filePath, true))
             {
                 foreach (var ce in candleEvents) //save all candle events to file
@@ -60,7 +62,9 @@ namespace CryptoDownloader
                         // the date is included in the allowedDateRange
                         string candleValue = ce.Value.ToString();
                         candleValue = candleValue.Replace(" ", "");
-                        file.Write("\n{0},{1}",
+                        
+                        file.Write("{0}{1},{2}",
+                            newLine,
                             candleTime.ToDateTime().ToString(dateTimePattern),
                             candleValue);
                         file.Flush();

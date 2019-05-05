@@ -23,7 +23,7 @@ namespace CryptoDownloader.Tests
         [Fact]
         public void ShouldInvokeExchangeWithCorrectDateRanges()
         {
-            string seriesDir = Environment.CurrentDirectory + "/tests/ShouldInvokeExchangeWithCorrectDateRanges";
+            string seriesDir = Path.Combine(Environment.CurrentDirectory, "tests", "ShouldInvokeExchangeWithCorrectDateRanges");
             Mock<IExchange> exchangeService = new Mock<IExchange>(MockBehavior.Loose);
             var batchNumberService = new BatchNumberService();
             var filePathService = new FilePathService();
@@ -54,7 +54,7 @@ namespace CryptoDownloader.Tests
                 Times.Exactly(1)
             );
             exchangeService.VerifyNoOtherCalls();
-            Assert.False (File.Exists (String.Format("{0}/12/BTC_USD.csv",seriesDir)));
+            Assert.False (File.Exists (Path.Combine(seriesDir, "12", "BTC_USD.csv")));
         }
 
         [Fact]
@@ -88,8 +88,8 @@ namespace CryptoDownloader.Tests
         [Fact]
         public void ShouldNotNeedManyServices_WhenDummyDownloaderImplementation()
         {
-            string seriesDir = Environment.CurrentDirectory +
-                 "/tests/ShouldNotNeedManyServices_WhenDummyDownloaderImplementation";
+            string seriesDir = Path.Combine(Environment.CurrentDirectory,
+                 "tests", "ShouldNotNeedManyServices_WhenDummyDownloaderImplementation");
             var batchNumberService = new BatchNumberService();
             CancellationTokenSource cts = new CancellationTokenSource();
             var downloader = new SingleInstrumentDownloadServiceDryRun(batchNumberService);
@@ -97,8 +97,8 @@ namespace CryptoDownloader.Tests
 
             var instruments = new string[]{"BTC_USD","ETC_USD"};
             service.DownloadAndSave(instruments, 12, seriesDir, cts.Token);
-            Assert.False (File.Exists (String.Format("{0}/12/BTC_USD.csv",seriesDir)));
-            Assert.False (File.Exists (String.Format("{0}/12/ETC_USD.csv",seriesDir)));
+            Assert.False (File.Exists (Path.Combine(seriesDir, "12", "BTC_USD.csv")));
+            Assert.False (File.Exists (Path.Combine(seriesDir, "12", "ETC_USD.csv")));
         }
     }
 }

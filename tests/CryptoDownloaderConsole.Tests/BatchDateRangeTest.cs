@@ -24,7 +24,8 @@ namespace CryptoDownloader.Tests
             var ex = Record.Exception(testCode);
             Assert.NotNull(ex);
             Assert.IsType<ArgumentException>(ex);
-            Assert.Equal("Invalid DateTime.Kind for Instant.FromDateTimeUtc\nParameter name: dateTime", ex.Message);
+            Assert.Contains("Invalid DateTime.Kind for Instant.FromDateTimeUtc", ex.Message);
+            Assert.Contains("Parameter name: dateTime", ex.Message);
         }
 
         [Fact]

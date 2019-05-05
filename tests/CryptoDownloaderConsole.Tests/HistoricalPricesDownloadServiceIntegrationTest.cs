@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading;
 using Autofac;
+using CryptoDownloaderConsole;
 using Moq;
 using Xunit;
 
@@ -23,7 +24,7 @@ namespace CryptoDownloader.Tests
             ContainerBuilder b = new ContainerBuilder();
             b.RegisterModule<CryptoDownloaderAutofacModule>();
             
-            string seriesDir = Environment.CurrentDirectory + "/tests/ShouldCreateSpecifiedTimeSeries";
+            string seriesDir = Path.Combine(Environment.CurrentDirectory, "tests", "ShouldCreateSpecifiedTimeSeries");
             Cleanup(seriesDir);
             CancellationTokenSource cts = new CancellationTokenSource();
             b.RegisterType<SingleInstrumentDownloadService>().As<ISingleInstrumentDownloadService>();
@@ -38,11 +39,11 @@ namespace CryptoDownloader.Tests
                 var instruments = new string[]{"USDC_BTC"};
                 historicalService.DownloadAndSave(instruments, batchNumber, seriesDir, cts.Token);
 
-                string filePath = string.Format("{0}/{1}/USDC_BTC.csv", seriesDir, batchNumber);
+                string filePath = Path.Combine(seriesDir, batchNumber.ToString(), "USDC_BTC.csv");
                 Assert.True (File.Exists (filePath));
                 var fileContents = File.ReadAllText(filePath);
                 // assert that there are 2016 candle events written to file (file has 2017 lines, 1 is a header)
-                Assert.Equal(2017, fileContents.Split('\n').Length);
+                Assert.Equal(2017, fileContents.SplitByNewLine().Length);
                 // do not check the file contents, because after some time
                 // the data will be not available on Poloniex and this test would fail
             }

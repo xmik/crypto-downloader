@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading;
 using Autofac;
+using CryptoDownloaderConsole;
 using Xunit;
 
 namespace CryptoDownloader.Tests
@@ -59,7 +60,7 @@ namespace CryptoDownloader.Tests
                 // using integer number of ticks
                 new CandleEvent(new Candle(99f, 99f, 12f, 15f), new DateTime(2019,3,30,1,32,0, DateTimeKind.Utc).ToNodaTime().ToUnixTimeTicks())
             };
-            string filePath = Environment.CurrentDirectory + "/test1.csv";
+            string filePath = Path.Combine(Environment.CurrentDirectory, "test1.csv");
             Cleanup(filePath);
 
             var seriesWriter = new EventSavingService();
@@ -74,7 +75,7 @@ namespace CryptoDownloader.Tests
             Assert.Contains("2019-03-30T01:32:00,99,99,12,15", fileContents);
             Assert.DoesNotContain("33,100,12,15", fileContents);
             // assert that there are 2 candle events written to file (file has 3 lines, 1 is header)
-            Assert.Equal(3, fileContents.Split('\n').Length);
+            Assert.Equal(3, fileContents.SplitByNewLine().Length);
             Cleanup(filePath);
         }
 
@@ -88,7 +89,7 @@ namespace CryptoDownloader.Tests
             CandleEvent[] candleEvents = new CandleEvent[]{
                 new CandleEvent(new Candle(33f, 34f, 12f, 15f), 1L),
             };
-            string filePath = Environment.CurrentDirectory + "/newdir/test1.csv";
+            string filePath = Path.Combine(Environment.CurrentDirectory, "newdir", "test1.csv");
             Cleanup(filePath);
 
             var seriesWriter = new EventSavingService();
@@ -107,7 +108,7 @@ namespace CryptoDownloader.Tests
                 new CandleEvent(new Candle(33f, 34f, 12f, 15f), new DateTime(2019,3,30,1,30,0, DateTimeKind.Utc).ToNodaTime().ToUnixTimeTicks()),
                 new CandleEvent(new Candle(99f, 99f, 12f, 15f), new DateTime(2019,3,30,1,32,0, DateTimeKind.Utc).ToNodaTime().ToUnixTimeTicks())
             };
-            string filePath = Environment.CurrentDirectory + "/test2.csv";
+            string filePath = Path.Combine(Environment.CurrentDirectory, "test2.csv");
             Cleanup(filePath);
 
             var seriesWriter = new EventSavingService();
@@ -122,13 +123,13 @@ namespace CryptoDownloader.Tests
             Assert.Contains("2019-03-30T01:30:00,33,34,12,15", fileContents);
             Assert.Contains("2019-03-30T01:32:00,99,99,12,15", fileContents);
             // assert that there are 3 candle events written to file (file has 4 lines)
-            Assert.Equal(4, fileContents.Split('\n').Length);
+            Assert.Equal(4, fileContents.SplitByNewLine().Length);
 
             int addedCandles2 = seriesWriter.Write(candleEvents, filePath, cts.Token, longRange);
             // writing again should not have added any more events
             Assert.Equal(0, addedCandles2);
             // assert that there are 3 candle events written to file (file has 4 lines) (no changes)
-            Assert.Equal(4, fileContents.Split('\n').Length);
+            Assert.Equal(4, fileContents.SplitByNewLine().Length);
             Cleanup(filePath);
         }
 
@@ -140,7 +141,7 @@ namespace CryptoDownloader.Tests
                 new CandleEvent(new Candle(33f, 34f, 12f, 15f), new DateTime(2019,3,30,1,30,0, DateTimeKind.Utc).ToNodaTime().ToUnixTimeTicks()),
                 new CandleEvent(new Candle(99f, 99f, 12f, 15f), new DateTime(2019,3,30,1,32,0, DateTimeKind.Utc).ToNodaTime().ToUnixTimeTicks())
             };
-            string filePath = Environment.CurrentDirectory + "/test3.csv";
+            string filePath = Path.Combine(Environment.CurrentDirectory, "test3.csv");
             Cleanup(filePath);
 
             IRange<NodaTime.Instant> longRange = createLongRange();
@@ -163,13 +164,13 @@ namespace CryptoDownloader.Tests
             Assert.Contains("2019-03-30T01:30:00,33,34,12,15", fileContents);
             Assert.Contains("2019-03-30T01:32:00,99,99,12,15", fileContents);
             // assert that there are 3 candle events written to file (file has 4 lines)
-            Assert.Equal(4, fileContents.Split('\n').Length);
+            Assert.Equal(4, fileContents.SplitByNewLine().Length);
 
             int addedCandles2 = seriesWriter.Write(candleEvents, filePath, cts.Token, longRange);
             // writing again should not have added any more events
             Assert.Equal(0, addedCandles2);
             // assert that there are 3 candle events written to file (file has 4 lines) (no changes)
-            Assert.Equal(4, fileContents.Split('\n').Length);
+            Assert.Equal(4, fileContents.SplitByNewLine().Length);
             Cleanup(filePath);
         }
 
@@ -192,7 +193,7 @@ namespace CryptoDownloader.Tests
                 // date NOT included in date range, event will NOT be added
                 new CandleEvent(new Candle(99f, 99f, 12f, 15f), DateTimeExtensions.CreateNodaTime(2000,1,2,1,0,0).ToUnixTimeTicks()),
             };
-            string filePath = Environment.CurrentDirectory + "/test4.csv";
+            string filePath = Path.Combine(Environment.CurrentDirectory, "test4.csv");
             Cleanup(filePath);
 
             var seriesWriter = new EventSavingService();
@@ -211,13 +212,13 @@ namespace CryptoDownloader.Tests
             Assert.Contains("2000-01-01T01:15:00,15,66,12,15", fileContents);
             Assert.Contains("2000-01-01T01:54:00,15,88,12,15", fileContents);
             // assert that there are 4 candle events written to file (file has 5 lines)
-            Assert.Equal(5, fileContents.Split('\n').Length);
+            Assert.Equal(5, fileContents.SplitByNewLine().Length);
 
             int addedCandles2 = seriesWriter.Write(candleEvents, filePath, cts.Token, oneDayRange);
             // writing again should not have added any more events
             Assert.Equal(0, addedCandles2);
             // assert that there are 4 candle events written to file (file has 5 lines) (no changes)
-            Assert.Equal(5, fileContents.Split('\n').Length);
+            Assert.Equal(5, fileContents.SplitByNewLine().Length);
             Cleanup(filePath);
         }
 
@@ -240,7 +241,7 @@ namespace CryptoDownloader.Tests
                 // date NOT included in date range, event will NOT be added
                 new CandleEvent(new Candle(99f, 99f, 12f, 15f), DateTimeExtensions.CreateNodaTime(2000,1,2,1,0,0).ToUnixTimeTicks()),
             };
-            string filePath = Environment.CurrentDirectory + "/test5.csv";
+            string filePath = Path.Combine(Environment.CurrentDirectory, "test5.csv");
             Cleanup(filePath);
             
             // manually add 1st event
@@ -266,13 +267,13 @@ namespace CryptoDownloader.Tests
             Assert.Contains("2000-01-01T01:54:00,15,88,12,15", fileContents);
             Assert.DoesNotContain("99,99,12,15", fileContents);
             // assert that there are 4 candle events written to file (file has 5 lines)
-            Assert.Equal(5, fileContents.Split('\n').Length);
+            Assert.Equal(5, fileContents.SplitByNewLine().Length);
 
             int addedCandles2 = seriesWriter.Write(candleEvents, filePath, cts.Token, oneDayRange);
             // writing again should not have added any more events
             Assert.Equal(0, addedCandles2);
             // assert that there are 4 candle events written to file (file has 5 lines) (no changes)
-            Assert.Equal(5, fileContents.Split('\n').Length);
+            Assert.Equal(5, fileContents.SplitByNewLine().Length);
             Cleanup(filePath);
         }
     }
