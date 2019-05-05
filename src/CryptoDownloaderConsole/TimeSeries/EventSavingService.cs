@@ -15,9 +15,11 @@ namespace CryptoDownloader
         {        }
 
         public NodaTime.Instant ParseDateTime(string line, string dateTimePattern)
-        {        
-            DateTime dt = DateTime.ParseExact(line, dateTimePattern, CultureInfo.InvariantCulture).ToUniversalTime();
-            return DateTimeExtensions.ToNodaTime(dt);
+        {
+            DateTime dt = DateTime.ParseExact(line, dateTimePattern, CultureInfo.InvariantCulture);
+            // specify that the datetime saved in file uses UTC timezone
+            DateTime ut = DateTime.SpecifyKind(dt, DateTimeKind.Utc);
+            return DateTimeExtensions.ToNodaTime(ut.ToUniversalTime());
         }
 
         public int Write(CandleEvent[] candleEvents, string filePath, CancellationToken ct, IRange<NodaTime.Instant> allowedDateRange)

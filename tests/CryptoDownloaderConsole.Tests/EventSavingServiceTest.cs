@@ -28,8 +28,6 @@ namespace CryptoDownloader.Tests
             File.Delete(filePath);
         }
 
-
-
         [Fact]
         public void ShouldParseDateTime()
         {
