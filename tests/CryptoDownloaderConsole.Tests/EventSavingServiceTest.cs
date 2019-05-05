@@ -97,7 +97,7 @@ namespace CryptoDownloader.Tests
             int addedCandles = seriesWriter.Write(candleEvents, filePath, cts.Token, longRange);
             Assert.True (File.Exists (filePath));
             Cleanup(filePath);
-            Directory.Delete("newdir");
+            Directory.Delete(Path.GetDirectoryName(filePath));
         }
 
         [Fact]
