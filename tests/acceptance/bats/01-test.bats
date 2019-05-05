@@ -54,3 +54,8 @@ executable="./src/CryptoDownloaderConsole/bin/Release/netcoreapp2.1/CryptoDownlo
   assert_line --partial "XMR_BCN"
   assert_equal "$status" 0
 }
+@test "list --invalidoption" {
+  run dotnet "${executable}" list --invalidoption
+  assert_line --partial "Option 'invalidoption' is unknown"
+  assert_equal "$status" 1
+}
